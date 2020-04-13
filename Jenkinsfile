@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('compile 1') {
       steps {
-        sh 'javac src/Main.java'
+        sh 'javac Main.java'
       }
     }
 
