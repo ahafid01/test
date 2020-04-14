@@ -1,0 +1,171 @@
+buildscript {
+    ext {
+        runtimeTestLibraries = "$buildDir/runtimeTestLibs"
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.5.RELEASE")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'application'
+    id 'jacoco'
+    id 'org.openapi.generator' version '4.2.3'
+}
+
+group = 'fr.olaqin'
+version = '0.01'
+sourceCompatibility = '13'
+
+tasks.withType(Test) {
+    systemProperty "java.library.path", runtimeTestLibraries
+}
+task copyRuntimeLibs(type: Copy) {
+    into runtimeTestLibraries
+    from configurations.testRuntime
+}
+test.dependsOn copyRuntimeLibs
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repository.mulesoft.org/nexus/content/repositories/public/' }
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    developmentOnly 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.3.0.RELEASE'
+
+
+
+    compile 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    compile group: 'com.github.derjust', name: 'spring-data-dynamodb', version: '5.1.0'
+    testCompile('com.amazonaws:DynamoDBLocal:1.12.0')
+
+    implementation 'com.opencsv:opencsv:5.0'
+
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.19'
+
+    implementation "org.mapstruct:mapstruct-jdk8:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    implementation 'com.amazonaws:aws-java-sdk-ses:1.11.734'
+
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
+
+
+    compile group: 'io.swagger', name: 'swagger-annotations', version: '1.6.0'
+    compile group: 'io.swagger', name: 'swagger-models', version: '1.6.0'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.1'
+
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+}
+
+springBoot {
+    buildInfo()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+wrapper {
+    gradleVersion = '6.2'
+}
+
+application {
+    mainClassName = 'fr.olaqin.pfd.PfdApplication'
+}
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+    applyTo run
+}
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/pfd/service/dto/**', '**/pfd/entity/**', '**/pfd/config/**', '**/pfd/enums/**'
+                    ]
+            )
+        }))
+    }
+}
+task applicationCodeCoverageReport(type: JacocoReport) {
+    executionData run
+    sourceSets sourceSets.main
+}
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.3
+            }
+        }
+    }
+}
+check.dependsOn jacocoTestCoverageVerification
+
+jacocoTestCoverageVerification.dependsOn jacocoTestReport
+
+openApiValidate {
+    inputSpec = "$rootDir/swagger.yaml".toString()
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/swagger.yaml".toString()
+    outputDir = "$buildDir/generated/openapi".toString()
+    apiPackage = "fr.olaqin.pfd.api.controller"
+    invokerPackage = "fr.olaqin.pfd.api"
+    modelPackage = "fr.olaqin.pfd.api.model"
+    modelNamePrefix = "Api"
+    configOptions = [
+            dateLibrary        : "java8-localdatetime",
+            booleanGetterPrefix: "is",
+            interfaceOnly      : "true"
+    ]
+}
+
+sourceSets.main.java.srcDirs += "$buildDir/generated/openapi/src/main/java"
+
+compileJava.dependsOn tasks.openApiGenerate

@@ -1,0 +1,21 @@
+version: '3'
+services:
+  dynamodb:
+    container_name: dynamodb
+    image: amazon/dynamodb-local:latest
+    entrypoint: java
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ."
+    restart: always
+    volumes:
+      - dynamodb-data:/data
+    ports:
+      - "8000:8000"
+    networks:
+      - pfd-network
+
+volumes:
+  dynamodb-data:
+networks:
+  pfd-network:
+    name: pfd-network
+    driver: bridge

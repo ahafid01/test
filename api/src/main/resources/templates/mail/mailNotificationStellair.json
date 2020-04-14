@@ -1,0 +1,15 @@
+{
+  "urlForm":"%s",
+  "subject":"%s",
+  "civilite":"%s",
+  "nom":"%s",
+  "prenom":"%s",
+  "email":"%s",
+  "telephone":"%s",
+  "codePostal":"%s",
+  "profession":"%s",
+  "reponseAutreProfession":"%s",
+  "accepteEtreRecontacte":"%s",
+  "resultatQualif":"%s",
+  "raisonQualif":"%s"
+}

@@ -1,0 +1,39 @@
+{
+    "Template": {
+        "TemplateName": "StellairNotification",
+        "SubjectPart": "{{subject}}",
+        "HtmlPart": "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>
+        <p><a href="{{urlForm}}">{{urlForm}}</a></p>
+        <p>
+        <b>Civilité : </b> {{civilite}}
+        </p>
+        <p>
+        <b>Prénom : </b> {{prenom}}
+        </p>
+        <p>
+        <b>Nom : </b> {{nom}}
+        </p>
+        <p>
+        <b>E-mail : </b> {{email}}
+        </p>
+        <p>
+        <b>N° de téléphone mobile : </b> {{telephone}}
+        </p>
+        <p>
+        <b>Code postal du lieu d'exercice : </b> {{codePostal}}
+        </p>
+        <p>
+        <b>Votre profession : </b> {{profession}}
+        </p>
+        <p>
+        <b>Je suis intéressé par l'ordonnance électronique et j'accepte d'être recontacté par la société Ordoclic (https://www.ordoclic.fr) : </b>  {{accepteEtreRecontacte}}
+        </p>
+        <p>
+        <b>Résultat de la qualification : </b> {{resultatQualif}}
+        </p>
+        <p>
+        <b>Raison : </b> {{raisonQualif}}
+        </p>
+        </body></html>"
+    }
+}

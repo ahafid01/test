@@ -1,0 +1,285 @@
+$onsurface: rgba(0,0,0,0.6);
+
+.p-tabview.p-component.p-tabview-top {
+  display: flex;
+}
+
+#formulaire-info {
+  .p-tabview-nav.p-reset{
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0;
+    background: #E7E7E7;
+  }
+
+  .input-user-info {
+    margin-bottom: 1rem;
+  }
+}
+
+.p-unselectable-text {
+  width: 100%;
+  clear:both;
+  &.p-tabview-selected.p-highlight {
+    background-color: #E7E7E7;
+
+    li a {
+      background-color: red;
+    }
+  }
+}
+
+.p-tabview.p-tabview-top .p-tabview-nav li a  {
+  width: 100%;
+  margin: 0.25rem auto;
+}
+
+#formulaire-info .p-tabview.p-tabview-top .p-tabview-nav li a {
+  padding-bottom: 0.875rem;
+}
+
+
+.p-tabview-panels {
+  width: 100%;
+}
+
+#formulaire-info .p-tabview.p-tabview-top .p-tabview-nav {
+  padding: 1.75rem 0;
+
+  li a {
+    background-color: #E7E7E7;
+ 
+    border: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    color: #545454;
+    font-size: 1rem;
+    font-family: "Open Sans";
+
+    &:not(.p-disabled):focus{
+      outline: 0 none;
+      outline-offset: 0;
+     
+      box-shadow: none;
+    }
+  }
+
+  li.p-highlight a {
+    background-color: #D0D0D0;
+   
+  }
+}
+
+.formulaire-container {
+  max-width: 1092px;
+  margin: auto;
+
+  .content-section {
+    margin: 1rem 2rem 4rem 2rem;
+  }
+
+  .p-inputtext:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+   
+    box-shadow: none;
+    border-color: transparent;
+   
+    border-bottom: 1px solid black;
+  }
+}
+
+.p-inputtext.p-component {
+  border: none;
+  border-bottom: solid 1px $onsurface;   
+  border-radius: 0px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+
+}
+
+
+.p-float-label>input.p-filled ~ label {
+  text-transform: uppercase;
+  font-family: "Roboto";
+  font-weight: 500;
+}
+
+.p-float-label>input.p-inputtext:focus ~ label {
+  text-transform: uppercase;
+  font-family: "Roboto";
+  font-weight: 500;
+}
+
+
+
+.h3-adresses {
+  padding: 0.5rem;
+  
+  .title-section-adresses {
+   
+    box-shadow: inset 0 0px 0 white, inset 0 -1.5px 0 #7F7F7F;
+  }
+}
+
+.contract-item{
+  margin: 1rem auto;
+}
+
+.contract-header {
+  margin-bottom: 0.5rem;
+}
+
+.contract--header-text{
+  text-transform: uppercase;
+  font-family: "Roboto";
+  font-weight: 500;
+  color: #898989;
+}
+
+.contract-name{
+  font: "Open Sans";
+  font-weight: bold;
+}
+
+.divider-total-hr {
+  margin: 0;
+  border: 1px solid #ccc;
+}
+
+.divider-total {
+  margin-bottom: 0;
+}
+
+.single-contract-wrapper {
+  border: 1.5px solid #ccc;
+}
+
+.option-single-wrapper {
+  margin: 0;
+  .pi.pi-check-circle{
+    color: #7ED321;
+  }
+}
+
+.total {
+  font-weight: bold;
+}
+
+.adresse-identique{
+  margin-top: 1rem;
+}
+
+.h3-adresse-identique{
+  margin-bottom: 0.5rem;
+}
+
+.text-identique {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: -5px;
+}
+
+.switch-identique{
+  margin-bottom: -0.375rem;
+  margin-right: 0.375rem;
+}
+
+.informations-welcome--text{
+  text-align: center;
+  color: #545454;
+  max-width: 51rem;
+  font-size: 1rem;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.informations-welcome--strong{
+  font-weight: bold;
+}
+
+.informations-welcome--big {
+  color: #4A4A4A;
+    font-family: "Open Sans";
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem;
+}
+
+
+#formulaire-info {
+  max-width: 1092px;
+  margin: auto;
+}
+
+.addresses-postal-city {
+  margin-left: 0;
+}
+
+.button-formulaire-group .reset-formulaire.p-button {
+  border: none;
+  
+  span{
+    font-family: "Roboto";
+    color:  #898989;
+    background-color: white;
+
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+}
+
+.button-formulaire-group .save-formulaire.p-button {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.formulaire-panel-title .pi {
+  font-size: inherit;
+}
+
+.user-info-city {
+  margin-left: 0.875rem;
+}
+
+.switch-identique .p-inputswitch-slider {
+  transform: translateY(-1px);
+}
+
+.switch-identique.p-inputswitch {
+  margin-left: 0.5rem;
+  width: 2.5em;
+  height: 1.25rem;
+
+  .p-inputswitch-slider {
+    &::before{
+      border: 2px solid #959595;
+      height: 0.875rem;
+      width: 0.875rem;
+      left: .125rem;
+      bottom: 0.075rem;
+    }
+  }
+
+}
+
+.switch-identique.p-inputswitch-checked {
+  .p-inputswitch-slider { 
+    &:before{
+      border: 2px solid #007ad9;
+      left: -0.125rem;
+      bottom: 0.075rem;
+    }
+  }
+}
+
+.adresse-switch-wrapper {
+  margin-bottom: 2rem;
+}
+
+#mes-informations-section {
+  padding-top: 1.5rem;
+}

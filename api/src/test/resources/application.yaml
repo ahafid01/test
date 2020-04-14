@@ -1,0 +1,11 @@
+amazon:
+  aws:
+    accesskey: keyId
+    secretkey: secretKey
+    region: eu-west-3
+  dynamodb:
+    endpoint: http://localhost:8011/
+  ses:
+    from:
+    region:
+    endpoint:

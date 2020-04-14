@@ -1,0 +1,27 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    cache: false
+  data:
+    dynamodb:
+      entity2ddl:
+        auto: create-only
+server:
+  port: 8080
+amazon:
+  aws:
+    accesskey: keyId
+    secretkey: secretKey
+    region: eu-west-3
+  dynamodb:
+    endpoint: http://localhost:8000/
+  ses:
+    from: dev-galaxie@olaqin.fr
+    region: eu-central-1
+sso:
+  cognito:
+    clientId: aa9k35mic7ffm1pkcvdnsqn9q
+    clientSecret: jmk651ug79nmgan5hbh1b9icpjnepocp3eomsr7crbdig2bo75n
+    redirectUriTemplate: "http://localhost:8080/login/oauth2/code/cognito"
+    clientName: galaxie-dev

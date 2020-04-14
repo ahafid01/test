@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'application'
+}
+
+group = 'fr.olaqin'
+version = '0.01'
+sourceCompatibility = '13'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.batch:spring-batch-test'
+
+    implementation 'com.opencsv:opencsv:5.0'
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.19'
+
+    compile group: 'com.github.derjust', name: 'spring-data-dynamodb', version: '5.1.0'
+
+    testImplementation 'org.awaitility:awaitility:4.0.2'
+
+
+    implementation "org.mapstruct:mapstruct-jdk8:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    implementation  'com.amazonaws:aws-java-sdk-applicationautoscaling:1.11.734'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+wrapper {
+    gradleVersion = '6.2'
+}
+
+application {
+    mainClassName = 'fr.olaqin.pfdbatch.PfdBatchApplication'
+}

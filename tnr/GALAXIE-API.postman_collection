@@ -1,0 +1,389 @@
+{
+	"info": {
+		"_postman_id": "70cbfddb-f5d6-4254-9905-ee8705e4151e",
+		"name": "GALAXIE-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Afficher Patrice Martin avec identifiant valide",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check identifiant\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"});",
+							"",
+							"var value = pm.environment.get(\"utilisateurId-200\");",
+							"",
+							"pm.test(\"Body matches utilisateurId\", function () {",
+							"    pm.expect(pm.response.text()).to.include(value);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/{{utilisateurId-200}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						"{{utilisateurId-200}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Afficher Patrice Martin avec identifiant invalide",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"    pm.expect(pm.response.text()).to.include(\"UTILISATEUR_INTROUVABLE\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/{{utilisateurId-404}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						"{{utilisateurId-404}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Afficher Patrice Martin avec mail valide",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check email\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"email\");",
+							"});",
+							"",
+							"var value = pm.environment.get(\"email-200\");",
+							"",
+							"pm.test(\"Body matches email\", function () {",
+							"    pm.expect(pm.response.text()).to.include(value);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/?email={{email-200}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{email-200}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Afficher Patrice Martin avec mail invalide 412",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"    pm.response.to.have.status(412);",
+							"    pm.expect(pm.response.text()).to.include(\"EMAIL_INVALIDE\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/?email={{email-412}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{email-412}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Afficher Patrice Martin avec mail invalide 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"    pm.expect(pm.response.text()).to.include(\"UTILISATEUR_INTROUVABLE_AVEC_EMAIL\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/?email={{email-404}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{email-404}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifier infos Patrice Martin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nom\": \"MARTIN\",\r\n  \"prenom\": \"Patrice\",\r\n  \"email\": \"pmartin@olaqin.fr\",\r\n  \"dateNaissance\": \"1970-01-01\",\r\n  \"telephonePrincipal\": \"0606060606\",\r\n  \"telephoneSecondaire\": \"0101010101\",\r\n  \"adresseLivraison\": {\r\n    \"nomComplet\": \"M. Patrice MARTIN\",\r\n    \"ligne1\": \"210 rue Tolbiac\",\r\n    \"codePostal\": \"75013\",\r\n    \"ville\": \"PARIS\"\r\n  },\r\n  \"adresseFacturation\": {\r\n    \"nomComplet\": \"M. Patrice MARTIN\",\r\n    \"ligne1\": \"16 rue de la pompe\",\r\n    \"codePostal\": \"75016\",\r\n    \"ville\": \"PARIS\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/{{utilisateurId-200}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						"{{utilisateurId-200}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifier infos Patrice Martin avec mail invalide",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"    pm.expect(pm.response.text()).to.include(\"INVALIDE_DEFINITION\");",
+							"    pm.expect(pm.response.text()).to.include(\"doit être une adresse email bien formée\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nom\": \"MARTIN\",\r\n  \"prenom\": \"Patrice\",\r\n  \"email\": \"pmartin\",\r\n  \"dateNaissance\": \"1970-01-01\",\r\n  \"telephonePrincipal\": \"0606060606\",\r\n  \"telephoneSecondaire\": \"0101010101\",\r\n  \"adresseLivraison\": {\r\n    \"nomComplet\": \"M. Patrice MARTIN\",\r\n    \"ligne1\": \"210 rue Tolbiac\",\r\n    \"codePostal\": \"75013\",\r\n    \"ville\": \"PARIS\"\r\n  },\r\n  \"adresseFacturation\": {\r\n    \"nomComplet\": \"M. Patrice MARTIN\",\r\n    \"ligne1\": \"16 rue de la pompe\",\r\n    \"codePostal\": \"75016\",\r\n    \"ville\": \"PARIS\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/{{utilisateurId-204}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						"{{utilisateurId-204}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifier infos utilisateur inexistant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"    pm.expect(pm.response.text()).to.include(\"UTILISATEUR_INTROUVABLE\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nom\": \"MARTIN\",\r\n  \"prenom\": \"Patrice\",\r\n  \"email\": \"pmartin@olaqin.fr\",\r\n  \"dateNaissance\": \"1970-01-01\",\r\n  \"telephonePrincipal\": \"0606060606\",\r\n  \"telephoneSecondaire\": \"0101010101\",\r\n  \"adresseLivraison\": {\r\n    \"nomComplet\": \"M. Patrice MARTIN\",\r\n    \"ligne1\": \"210 rue Tolbiac\",\r\n    \"codePostal\": \"75013\",\r\n    \"ville\": \"PARIS\"\r\n  },\r\n  \"adresseFacturation\": {\r\n    \"nomComplet\": \"M. Patrice MARTIN\",\r\n    \"ligne1\": \"16 rue de la pompe\",\r\n    \"codePostal\": \"75016\",\r\n    \"ville\": \"PARIS\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}utilisateurs/{{utilisateurId-404}}",
+					"host": [
+						"{{baseUrl}}utilisateurs"
+					],
+					"path": [
+						"{{utilisateurId-404}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Affichage annuaire page 0 size 10",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bf87b59-502a-4344-b8ab-9027e6d20f72",
+						"exec": [
+							"pm.test(\"Status code is 200 and status code name has OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Page 0\", function () {",
+							"    pm.expect(jsonData.number).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"Size 10\", function () {",
+							"    pm.expect(jsonData.size).to.eql(10);",
+							"});",
+							"",
+							"pm.test(\"Data array is not empty and size 10\", function () {",
+							"    pm.expect(jsonData.content.length).to.eql(10);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}professionnels-sante-en-activite/annuaire/?page={{page-0}}&size={{size-10}}",
+					"host": [
+						"{{baseUrl}}professionnels-sante-en-activite"
+					],
+					"path": [
+						"annuaire",
+						""
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page-0}}"
+						},
+						{
+							"key": "size",
+							"value": "{{size-10}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

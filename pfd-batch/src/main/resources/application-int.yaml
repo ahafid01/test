@@ -1,0 +1,12 @@
+amazon:
+  aws:
+    accesskey:
+    secretkey:
+    region: eu-west-3
+  dynamodb:
+    endpoint:
+application:
+  asip:
+    cron: 0 0 0 1 * 2019
+    url: https://service.annuaire.sante.fr/annuaire-sante-webservices/V300/services/extraction/PS_LibreAcces
+    size: 104

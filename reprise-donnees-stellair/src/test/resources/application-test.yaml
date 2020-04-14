@@ -1,0 +1,20 @@
+amazon:
+  aws:
+    accesskey: keyId
+    secretkey: secretKey
+    region: eu-west-3
+  dynamodb:
+    endpoint: http://localhost:0000/
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:h2:file:./stellair/vcentral_AppCanopy_Test;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: none

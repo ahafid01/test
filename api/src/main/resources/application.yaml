@@ -1,0 +1,30 @@
+spring:
+  jackson:
+    default-property-inclusion: non_empty
+    serialization:
+      write-dates-as-timestamps: false
+      INDENT_OUTPUT: true
+  messages:
+    encoding: UTF-8
+    always-use-message-format: true
+  mvc:
+    locale: fr_FR
+    locale-resolver: fixed
+  security:
+    oauth2:
+      client:
+        registration:
+          cognito:
+            clientId: ${sso.cognito.clientId}
+            clientSecret: ${sso.cognito.clientSecret}
+            scope: openid
+            redirectUriTemplate: ${sso.cognito.redirectUriTemplate}
+            clientName: ${sso.cognito.clientName}
+        provider:
+          cognito:
+            issuerUri: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_ngXf3tAvD
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"

@@ -1,1 +1,75 @@
-.idea/
+/api/.gradle
+/api/build
+/api/gradle/wrapper/gradle-wrapper.jar
+
+/pfd-batch/.gradle
+/pfd-batch/build
+/pfd-batch/gradle/wrapper/gradle-wrapper.jar
+
+### STS ###
+/api/.apt_generated
+/api/.classpath
+/api/.factorypath
+/api/.project
+/api/.settings
+/api/.springBeans
+/api/.sts4-cache
+
+/pfd-batch/.apt_generated
+/pfd-batch/.classpath
+/pfd-batch/.factorypath
+/pfd-batch/.project
+/pfd-batch/.settings
+/pfd-batch/.springBeans
+/pfd-batch/.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+/.vscode/
+/.idea/
+
+# FRONTEND
+/app/node_modules
+/app/.pnp
+/app/.pnp.js
+
+# testing
+/app/coverage
+
+# production
+/app/build
+
+# misc
+/app/.DS_Store
+/app/.env.local
+/app/.env.development.local
+/app/.env.test.local
+/app/.env.production.local
+
+/app/npm-debug.log*
+/app/yarn-debug.log*
+/app/yarn-error.log*
+
+/app/package-lock.json
+/.gradle/
+/settings.gradle
+
+/localstack-compose.yaml
+/docker-compose-int.yaml
+
+### H2 ###
+*.lock.db
+*.trace.db

@@ -1,0 +1,582 @@
+openapi: 3.0.2
+info:
+  description: Galaxie api
+  title: GALAXIE
+  version: 1.0.0
+  termsOfService: 'http://www.olaqin.fr/'
+  contact:
+    name: Raphaelle MAZURE
+    email: raphaelle.mazure@olaqin.fr
+  license:
+    name: OLAQIN
+    url: 'http://www.olaqin.fr/'
+servers:
+  - url: /api/1.0
+tags:
+  - name: utilisateurs-rest
+    description: Api de gestion des utilisateurs
+  - name: professionnels-sante-en-activite-rest
+    description: Api de gestion de l'annuaire des professionnels de santé en activité
+  - name: prospects-rest
+    description: Api de gestion des prospects (Profesionnels de santé)
+paths:
+  "/professionnels-sante-en-activite/annuaire":
+    get:
+      tags:
+        - professionnels-sante-en-activite-rest
+      summary: Afficher l'annuaire des professionnels de santé en activité
+      operationId: getAnnuaire
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+          required: true
+        - in: query
+          name: size
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+          required: true
+      responses:
+        200:
+          description: L'annuaire des professionnels de santé en activité
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/annuaireProfessionnelSanteEnActivitePage'
+        401:
+          description: Une authentification est nécessaire pour accéder à la ressource
+        403:
+          description: Accès refusé
+        500:
+          description: Erreur interne du serveur
+  "/utilisateurs":
+    get:
+      tags:
+        - utilisateurs-rest
+      summary: Afficher les informations de l'utilisateur
+      operationId: findByEmail
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Les informations de l'utilisateur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/utilisateur'
+        401:
+          description: Une authentification est nécessaire pour accéder à la ressource
+        403:
+          description: Accès refusé
+        404:
+          description: Ressource demandée est introuvable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        500:
+          description: Erreur interne du serveur
+      deprecated: false
+  "/utilisateurs/{utilisateurId}":
+    get:
+      tags:
+        - utilisateurs-rest
+      summary: Afficher les informations de l'utilisateur
+      operationId: findByUtilisateurId
+      parameters:
+        - name: utilisateurId
+          in: path
+          description: Identifiant de l'utilisateur
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Les informations de l'utilisateur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/utilisateur'
+        401:
+          description: Une authentification est nécessaire pour accéder à la ressource
+        403:
+          description: Accès refusé
+        404:
+          description: Ressource demandée est introuvable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        500:
+          description: Erreur interne du serveur
+    put:
+      tags:
+        - utilisateurs-rest
+      summary: Modifier les informations de l'utilisateur
+      operationId: put
+      parameters:
+        - name: utilisateurId
+          in: path
+          description: Identifiant de l'utilisateur
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/utilisateur'
+        required: false
+      responses:
+        204:
+          description: Les informations utilisateur sont correctement modifiées
+        400:
+          description: Requête mal formée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        401:
+          description: Une authentification est nécessaire pour accéder à la ressource
+        403:
+          description: Accès refusé
+        404:
+          description: Ressource demandée est introuvable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        500:
+          description: Erreur interne du serveur
+  "/prospects":
+    get:
+      tags:
+        - prospects-rest
+      summary: Lister les prospects (professionnels de santé)
+      operationId: getAll
+      responses:
+        200:
+          description: La liste des prospects (professionnels de santé)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/professionnelSanteProspect'
+        401:
+          description: Une authentification est nécessaire pour accéder à la ressource
+        403:
+          description: Accès refusé
+        500:
+          description: Erreur interne du serveur
+      deprecated: false
+    post:
+      tags:
+        - prospects-rest
+      summary: Sauvegardé un prospect
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/professionnelSanteProspectForm'
+        required: true
+      responses:
+        201:
+          description: Le profesionnel de santé est correctement crée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/professionnelSanteProspect'
+        400:
+          description: Requête mal formée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        401:
+          description: Une authentification est nécessaire pour accéder à la ressource
+        403:
+          description: Accès refusé
+        404:
+          description: Ressource demandée est introuvable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        500:
+          description: Erreur interne du serveur
+      deprecated: false
+  "/prospects/{prospectId}":
+    get:
+      tags:
+        - prospects-rest
+      summary: Afficher un professionnel de santé
+      operationId: findByProspectId
+      parameters:
+        - name: prospectId
+          in: path
+          description: Identifiant unique du prospect
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Le profesionnel de santé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/professionnelSanteProspect'
+        401:
+          description: Une authentification est nécessaire pour accéder à la ressource
+        403:
+          description: Accès refusé
+        404:
+          description: Ressource demandée est introuvable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        500:
+          description: Erreur interne du serveur
+      deprecated: false
+components:
+  schemas:
+    utilisateur:
+      required:
+        - nom
+        - prenom
+        - email
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifiant unique de l'utilisateur
+          readOnly: true
+        nom:
+          type: string
+        prenom:
+          type: string
+        email:
+          type: string
+          format: email
+        dateNaissance:
+          type: string
+          format: date
+        telephonePrincipal:
+          type: string
+        telephoneSecondaire:
+          type: string
+        adresseLivraison:
+          $ref: '#/components/schemas/adresse'
+        adresseFacturation:
+          $ref: '#/components/schemas/adresse'
+    adresse:
+      required:
+        - nomComplet
+        - ligne1
+        - codePostal
+        - ville
+      type: object
+      properties:
+        nomComplet:
+          type: string
+        ligne1:
+          type: string
+        ligne2:
+          type: string
+        codePostal:
+          type: string
+        ville:
+          type: string
+    annuaireProfessionnelSanteEnActivite:
+      type: object
+      properties:
+        typeIdentifiantPP:
+          type: string
+        identifiantPP:
+          type: string
+        identificationNationalePP:
+          type: string
+        codeCiviliteExercice:
+          type: string
+        libelleCiviliteExercice:
+          type: string
+        codeCivilite:
+          type: string
+        libelleCivilite:
+          type: string
+        nomExercice:
+          type: string
+        prenomExercice:
+          type: string
+        codeProfession:
+          type: string
+        libelleProfession:
+          type: string
+        codeCategorieProfessionnelle:
+          type: string
+        libelleCategorieProfessionnelle:
+          type: string
+        codeTypeSavoirFaire:
+          type: string
+        libelleTypeSavoirFaire:
+          type: string
+        codeSavoirFaire:
+          type: string
+        libelleSavoirFaire:
+          type: string
+        codeModeExercice:
+          type: string
+        libelleModeExercice:
+          type: string
+        numeroSiretSite:
+          type: string
+        numeroSirenSite:
+          type: string
+        numeroFinessSite:
+          type: string
+        numeroFinessEtablissementJuridique:
+          type: string
+        identifiantTechniqueStructure:
+          type: string
+        raisonSocialeSite:
+          type: string
+        enseigneCommercialeSite:
+          type: string
+        complementDestinataireCoordStructure:
+          type: string
+        complementGeographiqueCoordStructure:
+          type: string
+        numeroVoieCoordStructure:
+          type: string
+        indiceRepetitionCoordStructure:
+          type: string
+        codeTypeVoieCoordStructure:
+          type: string
+        libelleTypeVoieCoordStructure:
+          type: string
+        libelleVoieCoordStructure:
+          type: string
+        mentionDistributionCoordStructure:
+          type: string
+        bureauCedexCoordStructure:
+          type: string
+        codePostalCoordStructure:
+          type: string
+        codeCommuneCoordStructure:
+          type: string
+        libelleCommuneCoordStructure:
+          type: string
+        codePaysCoordStructure:
+          type: string
+        libellePaysCoordStructure:
+          type: string
+        telephoneCoordStructure:
+          type: string
+        telephone2CoordStructure:
+          type: string
+        telecopieCoordStructure:
+          type: string
+        adresseEmailCoordStructure:
+          type: string
+          format: email
+        codeDepartementStructure:
+          type: string
+        libelleDepartementStructure:
+          type: string
+        ancienIdentifiantStructure:
+          type: string
+        autoriteEnregistrement:
+          type: string
+        codeSecteurActivite:
+          type: string
+        libelleSecteurActivite:
+          type: string
+        codeSectionTableauPharmaciens:
+          type: string
+        libelleSectionTableauPharmaciens:
+          type: string
+    professionnelSanteProspect:
+      type: object
+      properties:
+        accepteEtreRecontacte:
+          type: boolean
+        civilite:
+          type: string
+          enum:
+            - MADAME
+            - MONSIEUR
+        codePostal:
+          type: string
+        dateQualif:
+          type: string
+          format: date-time
+        email:
+          type: string
+          format: email
+        id:
+          type: string
+        nom:
+          type: string
+        prenom:
+          type: string
+        profession:
+          type: string
+          enum:
+            - MEDECIN_GENERALISTE
+            - MEDECIN_SPECIALISTE
+            - AUTRE
+        raisonQualif:
+          type: string
+          enum:
+            - UTILISATEUR_TROUVE
+            - LOCALISATION_DIFFERENTE
+            - NON_TROUVE
+            - LOCALISATION_LEGEREMENT_DIFFERENTE
+            - AUCUNE_VILLE_RETOURNEE
+        reponseAutreProfession:
+          type: string
+        resultatQualif:
+          type: string
+          enum:
+            - OK
+            - NOK
+        telephone:
+          type: string
+    professionnelSanteProspectForm:
+      type: object
+      required:
+        - nom
+        - prenom
+        - codePostal
+      properties:
+        accepteEtreRecontacte:
+          type: boolean
+        civilite:
+          type: string
+          enum:
+            - MADAME
+            - MONSIEUR
+        codePostal:
+          type: string
+        email:
+          type: string
+          format: email
+        nom:
+          type: string
+        prenom:
+          type: string
+        profession:
+          type: string
+          enum:
+            - MEDECIN_GENERALISTE
+            - MEDECIN_SPECIALISTE
+            - AUTRE
+        reponseAutreProfession:
+          type: string
+        telephone:
+          type: string
+    annuaireProfessionnelSanteEnActivitePage:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/page"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/annuaireProfessionnelSanteEnActivite"
+    page:
+      type: object
+      discriminator:
+        propertyName: content
+      properties:
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/pageable'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/sort'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    pageable:
+      title: Pageable
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/sort'
+        unpaged:
+          type: boolean
+    sort:
+      title: Sort
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    error:
+      type: object
+      properties:
+        horodatage:
+          type: string
+          format: date-time
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              champ:
+                type: string
+              valeur:
+                type: string
+              champAssocie:
+                type: string
+              message:
+                type: string
+              description:
+                type: string

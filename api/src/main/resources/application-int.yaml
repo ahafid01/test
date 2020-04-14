@@ -1,0 +1,27 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    cache: false
+server:
+  port: 8080
+amazon:
+  aws:
+    accesskey: AKIAQPTLZNKTEXEZRFX3
+    secretkey: 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
+    region: eu-west-3
+  ses:
+    from: dev-galaxie@olaqin.fr
+    region: eu-central-1
+application:
+  stellair:
+    template-name: StellairNotification
+    url-form: http://stellair.fr/test-b/
+    subject: Notification de Beta Test Stellair
+    to: abderrahim.hafid@olaqin.fr,abdelkader.lagraa@olaqin.fr,zacharie.lalou@olaqin.fr,samir.moussaddad@olaqin.fr
+sso:
+  cognito:
+    clientId: 3uidjik6gudv16f3el8k40lodj
+    clientSecret: b3pp4dir28panchgf115f87ua175rhr5240njfclo67er0tssej
+    redirectUriTemplate: "https://galaxie-alb2-1604420929.eu-west-3.elb.amazonaws.com/login/oauth2/code/cognito"
+    clientName: galaxie-int

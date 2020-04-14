@@ -1,0 +1,70 @@
+version: '3.7'
+services:
+  app:
+    container_name: app
+    build:
+      context: app
+      args:
+        PROFILE: dev
+    ports:
+      - "81:80"
+    depends_on:
+      - api
+    networks:
+      - pfd-network
+  api:
+    container_name: api
+    build:
+      context: api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - AMAZON_DYNAMODB_ENDPOINT=http://dynamodb:8000/
+    depends_on:
+      - dynamodb
+    networks:
+      - pfd-network
+  batch:
+    container_name: pfd-batch
+    build:
+      context: pfd-batch
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - AMAZON_DYNAMODB_ENDPOINT=http://dynamodb:8000/
+      - APPLICATION_ASIP_CRON=30 21 * * * *
+      - APPLICATION_ASIP_URL=http://api:8080/api/annuaire/asipFile
+    depends_on:
+      - api
+    networks:
+      - pfd-network
+  dynamodb:
+    container_name: dynamodb
+    image: amazon/dynamodb-local:latest
+    entrypoint: java
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/"
+    restart: always
+    volumes:
+      - dynamodb-data:/home/dynamodblocal
+    ports:
+      - "8000:8000"
+    networks:
+      - pfd-network
+  reprise-stellair:
+    container_name: reprise-stellair
+    build:
+      context: reprise-donnees-stellair
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - AMAZON_DYNAMODB_ENDPOINT=http://dynamodb:8000/
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:/usr/src/api/vcentral_AppCanopy_Test;AUTO_SERVER=TRUE
+    depends_on:
+      - dynamodb
+    networks:
+      - pfd-network
+volumes:
+  dynamodb-data:
+networks:
+  pfd-network:
+    name: pfd-network
+    driver: bridge

@@ -1,0 +1,21 @@
+{
+  "nom": "MAZURE",
+  "prenom": "Raphaelle",
+  "email": "raphaelle.mazure@ingenico.com",
+  "dateNaissance": "1980-01-01",
+  "telephonePrincipal": "0600000000",
+  "telephoneSecondaire": "0100000000",
+  "adresseLivraison": {
+    "nomComplet": "Mme Raphaëlle Mazure",
+    "ligne1": "Ingenico Group",
+    "ligne2": "28-32 Boulevard de Grenelle",
+    "codePostal": "75007",
+    "ville": "Paris"
+  },
+  "adresseFacturation": {
+    "nomComplet": "Mme Raphaëlle Mazure",
+    "ligne1": "212 rue de Tolbiac",
+    "codePostal": "75013",
+    "ville": "Paris"
+  }
+}
